@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://csu7rnb8qw5b1"]
+
+[ext_resource type="Script" uid="uid://bxpd37ht87jvb" path="res://addons/juiceboxplugin/components/ghost_trail.gd" id="1_v7oki"]
+[ext_resource type="Texture2D" uid="uid://badstbakb2vq4" path="res://assets/neo_zero_props_02.png" id="1_v8qja"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4vbm"]
+atlas = ExtResource("1_v8qja")
+region = Rect2(165.9587, 83.178925, 3.3753967, 4.957611)
+
+[node name="Bullet" type="Node2D" unique_id=1182593596]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1604476396]
+texture = SubResource("AtlasTexture_t4vbm")
+
+[node name="GhostTrail" type="Node2D" parent="Sprite2D" unique_id=1782873478]
+top_level = true
+script = ExtResource("1_v7oki")
+metadata/_custom_type_script = "uid://bxpd37ht87jvb"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ShakeProfile" format=3 uid="uid://6lsayngfjhec"]
+
+[ext_resource type="Script" uid="uid://bov34nqjx6no7" path="res://addons/juiceboxplugin/components/classes/shake_profile.gd" id="1_twg1m"]
+
+[resource]
+script = ExtResource("1_twg1m")
+intensity = 10.0
+stress = 3.0
+metadata/_custom_type_script = "uid://bov34nqjx6no7"

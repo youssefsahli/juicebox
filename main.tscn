@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bkvy15bd0v0er"]
+
+[ext_resource type="Script" uid="uid://b57dgoaw25xim" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dugctg1ir283n" path="res://player.tscn" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://dq4ixoapw4rkc" path="res://addons/juiceboxplugin/components/pop_label_manager.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bdiktftsegcy2" path="res://addons/juiceboxplugin/components/juice_camera_2d.gd" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://dmfmqy02p64pc" path="res://addons/juiceboxplugin/components/impact_frame.gd" id="5_lquwl"]
+
+[node name="Main" type="Node2D" unique_id=370307269]
+script = ExtResource("1_h2yge")
+
+[node name="Player" parent="." unique_id=1790634309 instance=ExtResource("2_1bvp3")]
+
+[node name="PopLabelManager" type="Node2D" parent="." unique_id=822628922]
+script = ExtResource("4_1bvp3")
+metadata/_custom_type_script = "uid://dq4ixoapw4rkc"
+
+[node name="ImpactFrame" type="Node" parent="." unique_id=629788130]
+script = ExtResource("5_lquwl")
+metadata/_custom_type_script = "uid://dmfmqy02p64pc"
+
+[node name="JuiceCamera2D" type="Camera2D" parent="." unique_id=1635164413]
+script = ExtResource("5_7mycd")
+metadata/_custom_type_script = "uid://bdiktftsegcy2"

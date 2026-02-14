@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juicebox Pro // API Reference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #0a0a0a;
+            --border: #27272a;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #a1a1aa;
+            background-image: radial-gradient(circle at 50% 0%, #18181b 0%, transparent 40%);
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+
+        /* Utilities */
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .code-block {
+            background: #0e0e10;
+            border: 1px solid #1f1f22;
+        }
+
+        .nav-link.active {
+            color: #10b981;
+            border-left-color: #10b981;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%);
+        }
+
+        /* Syntax Highlighting Sim */
+        .s-kw { color: #c084fc; } /* keyword */
+        .s-fn { color: #60a5fa; } /* function */
+        .s-st { color: #a5b4fc; } /* string */
+        .s-nm { color: #f472b6; } /* number/bool */
+        .s-ty { color: #34d399; } /* type */
+        .s-cm { color: #52525b; font-style: italic; } /* comment */
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row text-sm">
+
+    <!-- Mobile Nav -->
+    <nav class="md:hidden glass-panel border-b border-white/5 sticky top-0 z-50 px-6 py-3 flex justify-between items-center">
+        <div class="mono font-bold tracking-tight text-white">JUICEBOX_PRO <span class="text-emerald-500 text-xs">v1.0.4</span></div>
+    </nav>
+
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="hidden md:flex flex-col w-64 h-screen sticky top-0 border-r border-white/5 bg-[#050505]">
+        <div class="p-6 pb-2">
+            <h1 class="mono font-bold text-lg tracking-tight text-white mb-1">JUICEBOX</h1>
+            <div class="flex items-center gap-2">
+                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">PRO</span>
+                <span class="text-[10px] text-zinc-500 font-mono">v1.0.4</span>
+            </div>
+        </div>
+
+        <nav class="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto">
+            <div class="text-[10px] font-bold text-zinc-600 uppercase tracking-wider px-3 mb-2 mt-4">Core Systems</div>
+            <a href="#camera" class="nav-link block px-3 py-1.5 text-xs text-zinc-400 hover:text-white border-l-2 border-transparent transition-all">JuiceCamera2D</a>
+            <a href="#shake-res" class="nav-link block px-3 py-1.5 text-xs text-zinc-400 hover:text-white border-l-2 border-transparent transition-all ml-2">↳ ShakeProfile</a>
+            
+            <div class="text-[10px] font-bold text-zinc-600 uppercase tracking-wider px-3 mt-4 mb-2">Motion</div>
+            <a href="#squash" class="nav-link block px-3 py-1.5 text-xs text-zinc-400 hover:text-white border-l-2 border-transparent transition-all">SquashStretch</a>
+            <a href="#anim" class="nav-link block px-3 py-1.5 text-xs text-zinc-400 hover:text-white border-l-2 border-transparent transition-all">JuiceAnimator</a>
+            
+            <div class="text-[10px] font-bold text-zinc-600 uppercase tracking-wider px-3 mt-4 mb-2">VFX Modules</div>
+            <a href="#impact" class="nav-link block px-3 py-1.5 text-xs text-zinc-400 hover:text-white border-l-2 border-transparent transition-all">ImpactFrame</a>
+            <a href="#ghost" class="nav-link block px-3 py-1.5 text-xs text-zinc-400 hover:text-white border-l-2 border-transparent transition-all">GhostTrail</a>
+            <a href="#labels" class="nav-link block px-3 py-1.5 text-xs text-zinc-400 hover:text-white border-l-2 border-transparent transition-all">PopLabelManager</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-w-0">
+        <div class="max-w-5xl mx-auto px-6 py-8 space-y-16">
+
+            <!-- Intro -->
+            <div class="glass-panel p-4 rounded-lg flex items-center justify-between">
+                <p class="text-zinc-400 text-sm">
+                    <strong class="text-white">Juicebox Pro API</strong> &mdash; Component Reference.
+                </p>
+                <div class="hidden md:block text-[10px] font-mono text-zinc-600">FULL_SPEC_MODE</div>
+            </div>
+
+            <!-- JuiceCamera2D -->
+            <section id="camera" class="scroll-mt-12">
+                <header class="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-2">
+                    <h2 class="text-xl font-bold text-white">JuiceCamera2D</h2>
+                    <span class="mono text-[10px] text-zinc-500">extends <span class="text-emerald-400">Camera2D</span></span>
+                    <span class="ml-auto mono text-[10px] text-zinc-600">icon_camera.png</span>
+                </header>
+
+                <div class="grid lg:grid-cols-[1fr_320px] gap-8">
+                    <div class="space-y-6">
+                         <!-- Description -->
+                        <div class="glass-panel rounded-lg p-5 border-l-2 border-emerald-500">
+                            <h3 class="text-xs font-bold text-white mb-2 uppercase">Trauma-driven Perlin Shake</h3>
+                            <div class="space-y-3 text-xs text-zinc-400 leading-relaxed">
+                                <p>
+                                    <strong class="text-zinc-200">Cubic Shake Intensity:</strong>
+                                    Calculates shake using <code class="mono text-emerald-400">pow(trauma, 3)</code>. This ensures that the shake feels extremely intense at high trauma but decays rapidly to a subtle jitter, preventing "floaty" movement.
+                                </p>
+                                <p>
+                                    <strong class="text-zinc-200">Stress Scaling:</strong>
+                                    As trauma increases, the noise oscillation speed scales via <code class="mono text-emerald-400">noise_speed + (trauma * stress_scalar * 10.0)</code>. High-stress impacts jitter faster than low-stress vibrations.
+                                </p>
+                                <p>
+                                    <strong class="text-zinc-200">Camera Recovery:</strong>
+                                    When trauma reaches zero, the camera utilizes <code class="mono text-emerald-400">lerp(Vector2.ZERO, delta * 10.0)</code> to ensure the offset and rotation return to a clean neutral state without snapping.
+                                </p>
+                            </div>
+                            <div class="mt-4 code-block p-3 rounded mono text-[10px] text-zinc-500 border border-zinc-800">
+                                <span class="s-cm"># Sampling Logic (Axis Decoupling)</span><br>
+                                rotation = max_roll * amount * noise.get_noise_1d(time)<br>
+                                offset.x = max_offset.x * amount * noise.get_noise_1d(time + <span class="s-nm">100</span>)<br>
+                                offset.y = max_offset.y * amount * noise.get_noise_1d(time + <span class="s-nm">200</span>)
+                            </div>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 gap-6">
+                             <!-- Props -->
+                            <div>
+                                <h4 class="mono text-[10px] font-bold text-zinc-500 uppercase mb-3">Shake Settings</h4>
+                                <div class="space-y-2 font-mono text-xs">
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-emerald-400">max_offset</span><span class="text-zinc-500">Vector2(8, 6)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-emerald-400">max_roll</span><span class="text-zinc-500">float(0.5)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-emerald-400">trauma_decay</span><span class="text-zinc-500">float(2.0)</span>
+                                    </div>
+                                </div>
+                                
+                                <h4 class="mono text-[10px] font-bold text-zinc-500 uppercase mt-6 mb-3">Noise Settings</h4>
+                                <div class="space-y-2 font-mono text-xs">
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-emerald-400">noise_frequency</span><span class="text-zinc-500">float(0.2)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-emerald-400">noise_speed</span><span class="text-zinc-500">float(8.0)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-emerald-400">stress_scalar</span><span class="text-zinc-500">float(1.0)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Methods -->
+                            <div>
+                                <h4 class="mono text-[10px] font-bold text-zinc-500 uppercase mb-3">Methods</h4>
+                                <div class="space-y-2">
+                                    <div class="code-block px-3 py-2 rounded border border-zinc-800">
+                                        <div class="font-mono text-xs text-blue-400">add_trauma(amount)</div>
+                                    </div>
+                                    <div class="code-block px-3 py-2 rounded border border-zinc-800">
+                                        <div class="font-mono text-xs text-blue-400">shake(intensity, decay)</div>
+                                    </div>
+                                    <div class="code-block px-3 py-2 rounded border border-zinc-800">
+                                        <div class="font-mono text-xs text-blue-400">apply_profile(profile)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ShakeProfile Resource -->
+                    <div id="shake-res" class="bg-zinc-900/30 border border-zinc-800 rounded-lg p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="px-1 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold uppercase">Resource</span>
+                            <h3 class="text-sm font-bold text-white">ShakeProfile</h3>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 mb-4 leading-relaxed">
+                            Enables rapid iteration by defining shake characteristics as external resources. This allows sound designers or gameplay tuners to modify impacts without editing the Camera node directly.
+                        </p>
+                        <div class="space-y-2 font-mono text-[11px]">
+                            <div class="flex justify-between items-center bg-zinc-900 p-2 rounded">
+                                <span class="text-emerald-400">intensity</span>
+                                <span class="text-zinc-500">float</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-zinc-900 p-2 rounded">
+                                <span class="text-emerald-400">decay</span>
+                                <span class="text-zinc-500">float</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-zinc-900 p-2 rounded">
+                                <span class="text-emerald-400">speed</span>
+                                <span class="text-zinc-500">float</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-zinc-900 p-2 rounded">
+                                <span class="text-emerald-400">stress</span>
+                                <span class="text-zinc-500">float</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SquashStretch -->
+            <section id="squash" class="scroll-mt-12 border-t border-zinc-800 pt-8">
+                <header class="flex items-center gap-3 mb-6">
+                    <h2 class="text-xl font-bold text-white">SquashStretch</h2>
+                    <span class="mono text-[10px] text-zinc-500">extends <span class="text-emerald-400">Node</span></span>
+                </header>
+
+                <div class="grid md:grid-cols-[1fr_300px] gap-8">
+                    <div class="space-y-6">
+                        <p class="text-xs text-zinc-300 font-semibold">
+                            Procedural deformation for Sprite-based entities targeting the Parent node's scale.
+                        </p>
+                        <div class="space-y-4 text-xs text-zinc-400 leading-relaxed">
+                            <p>
+                                <strong class="text-zinc-200">Elasticity Logic:</strong>
+                                The component handles the return to the default state automatically in <code class="mono text-emerald-400">_process</code>. It uses a high-performance linear interpolation to "snap" back to <code class="mono">Vector2.ONE</code>.
+                            </p>
+                            <p>
+                                <strong class="text-zinc-200">State Manipulation:</strong>
+                                <br>&bull; <code class="mono text-zinc-300">trigger_jump()</code>: Instantly applies a vertical stretch (<code class="mono">jump_scale</code>). Best called when the character's upward velocity is initialized.
+                                <br>&bull; <code class="mono text-zinc-300">trigger_land()</code>: Instantly applies a horizontal squash (<code class="mono">land_scale</code>). Best called upon ground collision.
+                            </p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="mono text-[10px] font-bold text-zinc-500 uppercase mb-2">Exports</h4>
+                                <div class="space-y-1 font-mono text-xs">
+                                     <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-zinc-400">jump_scale</span><span class="text-emerald-400">Vector2(0.8, 1.2)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-zinc-400">land_scale</span><span class="text-emerald-400">Vector2(1.3, 0.7)</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-zinc-400">elasticity</span><span class="text-emerald-400">float(10.0)</span>
+                                    </div>
+                                </div>
+                            </div>
+                             <div>
+                                <h4 class="mono text-[10px] font-bold text-zinc-500 uppercase mb-2">Editor Tools</h4>
+                                <div class="space-y-1 font-mono text-xs">
+                                     <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-zinc-400">test_jump</span><span class="text-emerald-400">bool</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-zinc-800/50 pb-1">
+                                        <span class="text-zinc-400">test_land</span><span class="text-emerald-400">bool</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block rounded p-4 relative h-fit">
+                        <div class="absolute top-3 right-3 text-[9px] text-zinc-600 font-mono">EDITOR_HINT</div>
+<pre class="mono text-[11px] leading-relaxed text-zinc-400">
+<span class="s-fn">func</span> _process(delta):
+    parent.scale = parent.scale.lerp(
+        Vector2.ONE, 
+        elasticity * delta
+    )</pre>
+                        <p class="mt-4 text-[10px] text-zinc-500 italic">
+                            Utilizes <code class="mono">Engine.is_editor_hint()</code> to allow scale previewing directly in the Godot viewport via the Inspector booleans.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JuiceAnimator -->
+            <section id="anim" class="scroll-mt-12 border-t border-zinc-800 pt-8">
+                <header class="flex items-center gap-3 mb-6">
+                    <h2 class="text-xl font-bold text-white">JuiceAnimator</h2>
+                    <span class="mono text-[10px] text-zinc-500">extends <span class="text-emerald-400">Node</span></span>
+                </header>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <p class="text-xs text-zinc-300 font-semibold">
+                            A modular animation switcher for Sprite2D nodes that avoids AnimationPlayer overhead for simple frame-cycling.
+                        </p>
+                        <div class="space-y-4 text-xs text-zinc-400 leading-relaxed">
+                            <p>
+                                <strong class="text-zinc-200">State Reset Logic:</strong>
+                                Calling <code class="mono text-emerald-400">play()</code> resets the <code class="mono">_frame_timer</code> and sets the parent's texture and frame layout instantly. It specifically sets <code class="mono">vframes = 1</code>, assuming a horizontal sheet.
+                            </p>
+                            <p>
+                                <strong class="text-zinc-200">One-Shot Handling:</strong>
+                                If a <code class="mono text-emerald-400">JuiceAnimation</code> has <code class="mono">loop = false</code>, playback stops on the final frame and sets <code class="mono">_is_playing = false</code>.
+                            </p>
+                        </div>
+                         <div class="code-block p-3 rounded mono text-[10px] text-zinc-500 border border-zinc-800">
+                            <span class="s-cm"># Code Trigger Example</span><br>
+                            $JuiceAnimator.current_animation = "attack"
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="mono text-[10px] font-bold text-zinc-500 uppercase mb-3">Playback API</h4>
+                            <div class="space-y-2 font-mono text-xs">
+                                <div class="flex justify-between items-center bg-zinc-900/50 px-3 py-2 rounded">
+                                    <span class="text-emerald-400">animations</span>
+                                    <span class="text-zinc-500">Array[JuiceAnimation]</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-zinc-900/50 px-3 py-2 rounded">
+                                    <span class="text-emerald-400">autoplay</span>
+                                    <span class="text-zinc-500">String("idle")</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-zinc-900/50 px-3 py-2 rounded">
+                                    <span class="text-blue-400">play(anim_name)</span>
+                                    <span class="text-zinc-500">void</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-zinc-900/50 px-3 py-2 rounded">
+                                    <span class="text-blue-400">is_playing_one_shot()</span>
+                                    <span class="text-zinc-500">bool</span>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="border-t border-zinc-800 pt-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                 <span class="px-1 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[10px] font-bold uppercase">Resource</span>
+                                 <h4 class="text-xs font-bold text-white">JuiceAnimation</h4>
+                            </div>
+                            <div class="font-mono text-[10px] text-zinc-400 grid grid-cols-2 gap-y-1">
+                                <span class="text-emerald-400">name</span> <span>String</span>
+                                <span class="text-emerald-400">texture</span> <span>Texture2D</span>
+                                <span class="text-emerald-400">frames</span> <span>int(1)</span>
+                                <span class="text-emerald-400">fps</span> <span>float(10.0)</span>
+                                <span class="text-emerald-400">loop</span> <span>bool(true)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VFX Grid -->
+            <div id="vfx-grid" class="border-t border-zinc-800 pt-8 scroll-mt-12">
+                <h2 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-6">Utility Modules</h2>
+                
+                <div class="grid lg:grid-cols-1 gap-6">
+                    <!-- Impact -->
+                    <section id="impact" class="glass-panel p-6 rounded-lg grid md:grid-cols-[200px_1fr] gap-6">
+                        <div class="font-mono text-sm">
+                            <h3 class="font-bold text-white mb-1">ImpactFrame</h3>
+                            <div class="text-[10px] text-zinc-500 mb-3">res://.../impact_frame.gd</div>
+                            <div class="text-[11px] text-blue-400 mb-1">play()</div>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-zinc-300 font-semibold mb-2">Hitstop Implementation Logic</p>
+                            <p class="text-[11px] text-zinc-400 mb-4 leading-relaxed">
+                                Triggers a temporary freeze by manipulating <code class="mono text-emerald-400">Engine.time_scale</code>. Since global time is frozen, the internal timer requires specific configuration to escape the await loop.
+                            </p>
+                             <div class="grid grid-cols-2 gap-4 text-[10px] mono bg-zinc-950 p-3 rounded border border-zinc-800">
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">freeze_duration</span>
+                                    <span class="text-emerald-400">0.05s</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">time_scale_factor</span>
+                                    <span class="text-emerald-400">0.0</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">flash_screen</span>
+                                    <span class="text-emerald-400">bool(false)</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">flash_color</span>
+                                    <span class="text-emerald-400">Color.WHITE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Ghost -->
+                    <section id="ghost" class="glass-panel p-6 rounded-lg grid md:grid-cols-[200px_1fr] gap-6">
+                        <div class="font-mono text-sm">
+                            <h3 class="font-bold text-white mb-1">GhostTrail</h3>
+                             <div class="text-[10px] text-zinc-500 mb-3">res://.../ghost_trail.gd</div>
+                        </div>
+                        <div>
+                             <p class="text-[11px] text-zinc-300 font-semibold mb-2">Snapshot Trail Logic</p>
+                            <p class="text-[11px] text-zinc-400 mb-4 leading-relaxed">
+                                Spawns independent sprite clones to create a high-speed after-image effect. Clones are added to <code class="mono text-emerald-400">get_tree().root</code> to decouple them from the parent's transformation matrix.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 text-[10px] mono bg-zinc-950 p-3 rounded border border-zinc-800">
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">emit_interval</span>
+                                    <span class="text-emerald-400">0.05s</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">active</span>
+                                    <span class="text-emerald-400">bool(false)</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">fade_time</span>
+                                    <span class="text-emerald-400">0.4s</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">color_modulate</span>
+                                    <span class="text-emerald-400">Color(0.3, 0.6, 1)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Pop -->
+                    <section id="labels" class="glass-panel p-6 rounded-lg grid md:grid-cols-[200px_1fr] gap-6">
+                        <div class="font-mono text-sm">
+                            <h3 class="font-bold text-white mb-1">PopLabelManager</h3>
+                             <div class="text-[10px] text-zinc-500 mb-3">res://.../pop_label.gd</div>
+                             <div class="text-[11px] text-blue-400 mb-1">spawn_text(txt, pos, col)</div>
+                        </div>
+                        <div>
+                             <p class="text-[11px] text-zinc-300 font-semibold mb-2">Floating Combat Text System</p>
+                             <div class="text-[11px] text-zinc-400 mb-4 leading-relaxed space-y-2">
+                                <p>A high-performance system for spawning floating labels. Uses <code class="mono text-emerald-400">set_parallel(true)</code> to handle simultaneous motion and aesthetic transforms.</p>
+                                <ul class="list-disc ml-4 space-y-1">
+                                    <li><span class="text-zinc-200">Y-Displacement:</span> Moves to <code class="mono">pos + drift_velocity</code> using <code class="mono">TRANS_BOUNCE</code>.</li>
+                                    <li><span class="text-zinc-200">X-Jitter:</span> Random horizontal drift of <code class="mono">±20px</code> to prevent label overlap.</li>
+                                    <li><span class="text-zinc-200">Automatic GC:</span> Lifecycle managed via <code class="mono">tween.chain().tween_callback(queue_free)</code>.</li>
+                                </ul>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 text-[10px] mono bg-zinc-950 p-3 rounded border border-zinc-800">
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">drift_velocity</span>
+                                    <span class="text-emerald-400">Vector2(0, -100)</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">gravity</span>
+                                    <span class="text-emerald-400">float(200.0)</span>
+                                </div>
+                                <div>
+                                    <span class="block text-zinc-500 mb-1">test_pop</span>
+                                    <span class="text-emerald-400">bool</span>
+                                </div>
+                                 <div>
+                                    <span class="block text-zinc-500 mb-1">font_resource</span>
+                                    <span class="text-emerald-400">Font</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function copyCode(btn) {
+            const pre = btn.nextElementSibling;
+            navigator.clipboard.writeText(pre.innerText);
+            btn.innerText = "COPIED";
+            setTimeout(() => btn.innerText = "COPY", 2000);
+        }
+
+        // Active state handling for sidebar
+        const sections = document.querySelectorAll('section, #vfx-grid');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current) || (current === 'vfx-grid' && link.getAttribute('href') === '#vfx-grid')) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
