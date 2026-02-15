@@ -7,74 +7,165 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --accent-start: #f97316; /* Orange */
+            --accent-end: #3b82f6;   /* Blue */
+        }
+
         body {
             font-family: 'JetBrains Mono', monospace;
-            background-color: #000;
-            color: #ccc;
+            background-color: #050505;
+            color: #bcbcbc;
             line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
         }
-        .container { max-width: 650px; }
-        a { color: #10b981; text-decoration: underline; }
-        .section-border { border-top: 1px solid #222; padding-top: 2rem; margin-top: 2rem; }
-        code { color: #eee; background: #111; padding: 0 4px; }
+
+        .container { max-width: 700px; }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .border-gradient {
+            border-image: linear-gradient(90deg, var(--accent-start), var(--accent-end)) 1;
+        }
+
+        .section-border { 
+            border-top: 1px solid #1a1a1a; 
+            padding-top: 2.5rem; 
+            margin-top: 2.5rem; 
+        }
+
+        code { 
+            color: #eee; 
+            background: #111; 
+            padding: 2px 5px;
+            border: 1px solid #222;
+        }
+
+        a { 
+            color: #3b82f6; 
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        
+        a:hover {
+            border-color: #3b82f6;
+        }
     </style>
 </head>
-<body class="p-8">
+<body class="p-8 md:p-16">
 
     <div class="container mx-auto">
-        <header class="mb-12">
-            <h1 class="text-white font-bold text-lg">JUICEBOX v1.0.4</h1>
-            <p class="text-xs uppercase text-zinc-500">License: MIT (Open Source)</p>
-            <div class="mt-4 text-xs">
-                <a href="api.html" class="mr-4">API Reference</a>
-                <a href="https://github.com/youssefsahli/juicebox">Source Repository</a>
+        <header class="mb-16">
+            <h1 class="text-white font-bold text-xl tracking-tighter">
+                <span class="text-gradient">JUICEBOX</span> v1.0.4
+            </h1>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-zinc-600 mt-1">License: MIT (Open Source)</p>
+            
+            <div class="mt-8 flex gap-6 text-[11px] font-bold uppercase tracking-widest">
+                <a href="api.html" class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                    API Reference
+                </a>
+                <a href="https://github.com/youssefsahli/juicebox" class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    Source Repository
+                </a>
             </div>
         </header>
 
-        <section class="space-y-4">
-            <p class="text-sm">
-                Juicebox is a GDScript-based component library for Godot 4.x. It provides modular nodes designed to implement screen effects and procedural animations via composition.
+        <section>
+            <p class="text-sm border-l-2 border-orange-500 pl-6 py-1">
+                Juicebox is a GDScript-based component library for Godot 4.x. It provides modular nodes for screen effects and procedural animations via composition.
             </p>
         </section>
 
         <section class="section-border">
-            <h2 class="text-xs font-bold text-white uppercase mb-6">Core Components</h2>
-            <div class="space-y-6 text-xs">
-                <div>
-                    <span class="text-emerald-500 font-bold">JuiceCamera2D:</span> 
-                    Trauma-based offset system. Uses <code class="mono">FastNoiseLite</code> for 1D noise sampling to generate coordinate displacement and rotation.
+            <h2 class="text-[11px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-8">Core Components</h2>
+            
+            <div class="grid gap-8 text-[12px]">
+                <div class="group">
+                    <div class="flex items-baseline gap-3 mb-1">
+                        <span class="text-white font-bold">JuiceCamera2D</span>
+                        <span class="text-zinc-700 text-[10px]">/ camera_2d.gd</span>
+                    </div>
+                    <p class="text-zinc-500 leading-relaxed">
+                        Trauma-driven offset system. Samples 1D <code class="mono">FastNoiseLite</code> to generate coordinate displacement and rotation.
+                    </p>
                 </div>
-                <div>
-                    <span class="text-emerald-500 font-bold">ImpactFrame:</span> 
-                    Global time-scale manipulation. Overrides <code class="mono">Engine.time_scale</code> for a specific duration to execute hitstop logic.
+
+                <div class="group">
+                    <div class="flex items-baseline gap-3 mb-1">
+                        <span class="text-white font-bold">ImpactFrame</span>
+                        <span class="text-zinc-700 text-[10px]">/ impact_frame.gd</span>
+                    </div>
+                    <p class="text-zinc-500 leading-relaxed">
+                        Global time-scale manipulation. Overrides <code class="mono">Engine.time_scale</code> for specified durations to execute hitstop logic.
+                    </p>
                 </div>
-                <div>
-                    <span class="text-emerald-500 font-bold">SquashStretch:</span> 
-                    Procedural scale interpolation. Updates parent <code class="mono">scale</code> vector based on <code class="mono">lerp</code> functions toward a neutral <code class="mono">Vector2.ONE</code>.
+
+                <div class="group">
+                    <div class="flex items-baseline gap-3 mb-1">
+                        <span class="text-white font-bold">SquashStretch</span>
+                        <span class="text-zinc-700 text-[10px]">/ squash_stretch.gd</span>
+                    </div>
+                    <p class="text-zinc-500 leading-relaxed">
+                        Procedural scale interpolation. Updates parent <code class="mono">scale</code> vector using <code class="mono">lerp</code> toward <code class="mono">Vector2.ONE</code>.
+                    </p>
                 </div>
-                <div>
-                    <span class="text-emerald-500 font-bold">GhostTrail:</span> 
-                    Dynamic sprite instantiation. Generates <code class="mono">Sprite2D</code> clones at defined intervals and manages alpha-channel tweening.
+
+                <div class="group">
+                    <div class="flex items-baseline gap-3 mb-1">
+                        <span class="text-white font-bold">GhostTrail</span>
+                        <span class="text-zinc-700 text-[10px]">/ ghost_trail.gd</span>
+                    </div>
+                    <p class="text-zinc-500 leading-relaxed">
+                        Dynamic sprite instantiation. Spawns <code class="mono">Sprite2D</code> clones and manages alpha-channel tweening.
+                    </p>
                 </div>
-                <div>
-                    <span class="text-emerald-500 font-bold">PopLabelManager:</span> 
-                    Canvas-item motion control. Handles the instantiation and lifecycle management of combat text labels.
+
+                <div class="group">
+                    <div class="flex items-baseline gap-3 mb-1">
+                        <span class="text-white font-bold">PopLabelManager</span>
+                        <span class="text-zinc-700 text-[10px]">/ pop_label.gd</span>
+                    </div>
+                    <p class="text-zinc-500 leading-relaxed">
+                        Canvas-item motion control. Manages lifecycle and drift-velocity for floating combat text.
+                    </p>
                 </div>
             </div>
         </section>
 
         <section class="section-border">
-            <h2 class="text-xs font-bold text-white uppercase mb-4">Specifications</h2>
-            <ul class="text-xs space-y-2 text-zinc-400">
-                <li>• No C# or GDExtension dependencies.</li>
-                <li>• Node-based composition; no inheritance required.</li>
-                <li>• Signal-compatible public APIs.</li>
-                <li>• Editor-integration via <code class="mono">@tool</code> scripts.</li>
+            <h2 class="text-[11px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-6">Specifications</h2>
+            <ul class="text-xs space-y-3">
+                <li class="flex gap-4">
+                    <span class="text-orange-500">01</span>
+                    <span class="text-zinc-400">Pure GDScript; no C# or binary dependencies.</span>
+                </li>
+                <li class="flex gap-4">
+                    <span class="text-zinc-600">02</span>
+                    <span class="text-zinc-400">Node-based composition (no inheritance required).</span>
+                </li>
+                <li class="flex gap-4">
+                    <span class="text-blue-500">03</span>
+                    <span class="text-zinc-400">Editor-integration via <code class="mono">@tool</code> scripts.</span>
+                </li>
             </ul>
         </section>
 
-        <footer class="mt-20 text-[10px] text-zinc-600">
-            <p>JUICEBOX // 2024 // MIT LIB</p>
+        <footer class="mt-32 pt-8 border-t border-zinc-900">
+            <div class="flex justify-between items-center text-[9px] font-bold tracking-[0.4em] text-zinc-800">
+                <span>JUICEBOX_PROJECT // 2024</span>
+                <span class="text-gradient uppercase">MIT_LICENSE</span>
+            </div>
         </footer>
     </div>
 
