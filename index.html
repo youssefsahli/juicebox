@@ -3,100 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juicebox // Free Godot 4 Juice</title>
+    <title>Juicebox // Technical Overview</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0d0d0d;
-            color: #e5e5e5;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #000;
+            color: #ccc;
+            line-height: 1.6;
         }
-
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        
-        .border-dashed-custom {
-            border: 1px dashed #333;
-        }
-
-        .btn-pixel {
-            background: #10b981;
-            color: #000;
-            box-shadow: 4px 4px 0px #064e3b;
-        }
-
-        .btn-pixel:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #064e3b;
-        }
+        .container { max-width: 650px; }
+        a { color: #10b981; text-decoration: underline; }
+        .section-border { border-top: 1px solid #222; padding-top: 2rem; margin-top: 2rem; }
+        code { color: #eee; background: #111; padding: 0 4px; }
     </style>
 </head>
-<body class="p-6 md:p-12">
+<body class="p-8">
 
-    <header class="max-w-2xl mx-auto flex justify-between items-baseline mb-16">
-        <div>
-            <h1 class="mono font-bold text-xl tracking-tighter text-white">JUICEBOX</h1>
-            <p class="text-[10px] mono text-emerald-500 uppercase tracking-widest">v1.0.4 // MIT LICENSE</p>
-        </div>
-        <nav class="flex gap-4 mono text-[11px]">
-            <a href="api.html" class="hover:text-emerald-400 underline decoration-zinc-700">API_REF</a>
-            <a href="https://github.com/youssefsahli/juicebox" class="hover:text-emerald-400 underline decoration-zinc-700">GITHUB</a>
-        </nav>
-    </header>
+    <div class="container mx-auto">
+        <header class="mb-12">
+            <h1 class="text-white font-bold text-lg">JUICEBOX v1.0.4</h1>
+            <p class="text-xs uppercase text-zinc-500">License: MIT (Open Source)</p>
+            <div class="mt-4 text-xs">
+                <a href="api.html" class="mr-4">API Reference</a>
+                <a href="https://github.com/youssefsahli/juicebox">Source Repository</a>
+            </div>
+        </header>
 
-    <main class="max-w-2xl mx-auto space-y-12">
-        
-        <section class="space-y-6">
-            <h2 class="text-3xl font-bold text-white leading-tight">
-                Add game feel to Godot 4 <br>
-                in about <span class="mono text-emerald-500">30 seconds</span>.
-            </h2>
-            <p class="text-zinc-400 leading-relaxed text-sm max-w-lg">
-                No complex setups or inheritance chains. Just drop a node into your scene and call 
-                <code class="mono text-zinc-200">play()</code>. It's free, open-source, and strictly GDScript.
+        <section class="space-y-4">
+            <p class="text-sm">
+                Juicebox is a GDScript-based component library for Godot 4.x. It provides modular nodes designed to implement screen effects and procedural animations via composition.
             </p>
-            <div class="pt-2">
-                <a href="api.html" class="btn-pixel inline-block px-6 py-2 mono font-bold text-xs uppercase transition-all">
-                    Get Started
-                </a>
+        </section>
+
+        <section class="section-border">
+            <h2 class="text-xs font-bold text-white uppercase mb-6">Core Components</h2>
+            <div class="space-y-6 text-xs">
+                <div>
+                    <span class="text-emerald-500 font-bold">JuiceCamera2D:</span> 
+                    Trauma-based offset system. Uses <code class="mono">FastNoiseLite</code> for 1D noise sampling to generate coordinate displacement and rotation.
+                </div>
+                <div>
+                    <span class="text-emerald-500 font-bold">ImpactFrame:</span> 
+                    Global time-scale manipulation. Overrides <code class="mono">Engine.time_scale</code> for a specific duration to execute hitstop logic.
+                </div>
+                <div>
+                    <span class="text-emerald-500 font-bold">SquashStretch:</span> 
+                    Procedural scale interpolation. Updates parent <code class="mono">scale</code> vector based on <code class="mono">lerp</code> functions toward a neutral <code class="mono">Vector2.ONE</code>.
+                </div>
+                <div>
+                    <span class="text-emerald-500 font-bold">GhostTrail:</span> 
+                    Dynamic sprite instantiation. Generates <code class="mono">Sprite2D</code> clones at defined intervals and manages alpha-channel tweening.
+                </div>
+                <div>
+                    <span class="text-emerald-500 font-bold">PopLabelManager:</span> 
+                    Canvas-item motion control. Handles the instantiation and lifecycle management of combat text labels.
+                </div>
             </div>
         </section>
 
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="border-dashed-custom p-4 space-y-2">
-                <h3 class="mono text-[10px] font-bold text-emerald-500 uppercase">01. JuiceCamera2D</h3>
-                <p class="text-xs text-zinc-400">Trauma-based Perlin shake. Feels heavy, not floaty.</p>
-            </div>
-            <div class="border-dashed-custom p-4 space-y-2">
-                <h3 class="mono text-[10px] font-bold text-emerald-500 uppercase">02. ImpactFrame</h3>
-                <p class="text-xs text-zinc-400">Time-scale manipulation for hitstop and flashes.</p>
-            </div>
-            <div class="border-dashed-custom p-4 space-y-2">
-                <h3 class="mono text-[10px] font-bold text-emerald-500 uppercase">03. SquashStretch</h3>
-                <p class="text-xs text-zinc-400">Procedural scale deformation for your sprites.</p>
-            </div>
-            <div class="border-dashed-custom p-4 space-y-2">
-                <h3 class="mono text-[10px] font-bold text-emerald-500 uppercase">04. GhostTrail</h3>
-                <p class="text-xs text-zinc-400">Spawn independent sprite clones for speed effects.</p>
-            </div>
-        </section>
-
-        <section class="bg-zinc-900/50 p-6 rounded border border-zinc-800">
-            <h3 class="mono text-[11px] font-bold text-white mb-4 uppercase">The Philosophy</h3>
-            <ul class="mono text-[10px] text-zinc-500 space-y-2">
-                <li>&bull; <span class="text-zinc-300 underline underline-offset-4">COMPOSITION:</span> ADD NODES AS CHILDREN. NO REFACTORING.</li>
-                <li>&bull; <span class="text-zinc-300 underline underline-offset-4">ZERO SETUP:</span> WORKS OUT OF THE BOX WITH SENSIBLE DEFAULTS.</li>
-                <li>&bull; <span class="text-zinc-300 underline underline-offset-4">GDSCRIPT ONLY:</span> NO C#, NO BINARIES, NO BULLSHIT.</li>
+        <section class="section-border">
+            <h2 class="text-xs font-bold text-white uppercase mb-4">Specifications</h2>
+            <ul class="text-xs space-y-2 text-zinc-400">
+                <li>• No C# or GDExtension dependencies.</li>
+                <li>• Node-based composition; no inheritance required.</li>
+                <li>• Signal-compatible public APIs.</li>
+                <li>• Editor-integration via <code class="mono">@tool</code> scripts.</li>
             </ul>
         </section>
 
-        <footer class="pt-12 border-t border-zinc-900 flex justify-between items-center opacity-40">
-            <p class="mono text-[9px]">BY YOSA // 2024</p>
-            <p class="mono text-[9px]">MIT LICENSE // SPREAD THE JUICE</p>
+        <footer class="mt-20 text-[10px] text-zinc-600">
+            <p>JUICEBOX // 2024 // MIT LIB</p>
         </footer>
-
-    </main>
+    </div>
 
 </body>
 </html>
