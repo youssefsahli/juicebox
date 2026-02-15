@@ -9,162 +9,194 @@
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
         
         :root {
-            --accent-start: #f97316; /* Orange */
-            --accent-end: #3b82f6;   /* Blue */
+            --accent-orange: #f97316;
+            --accent-blue: #3b82f6;
+            --bg-base: #030303;
         }
 
         body {
             font-family: 'JetBrains Mono', monospace;
-            background-color: #050505;
-            color: #bcbcbc;
+            background-color: var(--bg-base);
+            color: #a1a1aa;
             line-height: 1.6;
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 0% 0%, rgba(249, 115, 22, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
         }
 
-        .container { max-width: 700px; }
+        .container { max-width: 750px; }
         
         .text-gradient {
-            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .border-gradient {
-            border-image: linear-gradient(90deg, var(--accent-start), var(--accent-end)) 1;
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
-        .section-border { 
-            border-top: 1px solid #1a1a1a; 
-            padding-top: 2.5rem; 
-            margin-top: 2.5rem; 
+        .section-header::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, #18181b, transparent);
+        }
+
+        .component-card {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid #111;
+            transition: all 0.2s ease;
+        }
+
+        .component-card:hover {
+            border-color: #222;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         code { 
-            color: #eee; 
-            background: #111; 
-            padding: 2px 5px;
-            border: 1px solid #222;
+            color: #e4e4e7; 
+            background: #09090b; 
+            padding: 2px 6px;
+            border: 1px solid #18181b;
+            font-size: 0.9em;
         }
 
-        a { 
-            color: #3b82f6; 
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
         }
-        
-        a:hover {
-            border-color: #3b82f6;
-        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: #222; }
     </style>
 </head>
-<body class="p-8 md:p-16">
+<body class="p-6 md:p-20 antialiased">
 
     <div class="container mx-auto">
-        <header class="mb-16">
-            <h1 class="text-white font-bold text-xl tracking-tighter">
-                <span class="text-gradient">JUICEBOX</span> v1.0.4
-            </h1>
-            <p class="text-[10px] uppercase tracking-[0.2em] text-zinc-600 mt-1">License: MIT (Open Source)</p>
+        <header class="mb-24">
+            <div class="flex items-center gap-4 mb-2">
+                <h1 class="text-white font-bold text-2xl tracking-tighter uppercase">
+                    Juicebox <span class="text-gradient">Core</span>
+                </h1>
+                <span class="text-[10px] px-2 py-0.5 border border-zinc-800 text-zinc-500 font-bold">V1.0.4</span>
+            </div>
+            <p class="text-[10px] uppercase tracking-[0.3em] text-zinc-600">MIT Open Source // GDScript 4.x</p>
             
-            <div class="mt-8 flex gap-6 text-[11px] font-bold uppercase tracking-widest">
-                <a href="api.html" class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-                    API Reference
+            <div class="mt-10 flex flex-wrap gap-x-8 gap-y-4 text-[11px] font-bold uppercase tracking-widest">
+                <a href="api.html" class="flex items-center gap-2 text-zinc-400 hover:text-orange-500 transition-colors">
+                    <span class="dot bg-orange-500"></span> API_REFERENCE
                 </a>
-                <a href="https://github.com/youssefsahli/juicebox" class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                    Source Repository
+                <a href="https://github.com/youssefsahli/juicebox" class="flex items-center gap-2 text-zinc-400 hover:text-blue-500 transition-colors">
+                    <span class="dot bg-blue-500"></span> SOURCE_CODE
                 </a>
             </div>
         </header>
 
-        <section>
-            <p class="text-sm border-l-2 border-orange-500 pl-6 py-1">
-                Juicebox is a GDScript-based component library for Godot 4.x. It provides modular nodes for screen effects and procedural animations via composition.
+        <section class="mb-20">
+            <p class="text-sm text-zinc-400 leading-relaxed max-w-xl">
+                Juicebox is a high-performance component library for Godot 4.x. It utilizes node-based composition to implement high-fidelity game feel without altering existing inheritance structures.
             </p>
         </section>
 
-        <section class="section-border">
-            <h2 class="text-[11px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-8">Core Components</h2>
+        <section class="mb-20">
+            <div class="section-header">
+                <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.4em]">Modules</h2>
+            </div>
             
-            <div class="grid gap-8 text-[12px]">
-                <div class="group">
-                    <div class="flex items-baseline gap-3 mb-1">
-                        <span class="text-white font-bold">JuiceCamera2D</span>
-                        <span class="text-zinc-700 text-[10px]">/ camera_2d.gd</span>
+            <div class="grid gap-4">
+                <div class="component-card">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="text-white text-xs font-bold">JuiceCamera2D</h3>
+                        <span class="text-[9px] text-zinc-700">camera_2d.gd</span>
                     </div>
-                    <p class="text-zinc-500 leading-relaxed">
-                        Trauma-driven offset system. Samples 1D <code class="mono">FastNoiseLite</code> to generate coordinate displacement and rotation.
+                    <p class="text-[11px] text-zinc-500">
+                        Trauma-driven shake system using 1D <code class="mono text-orange-400">FastNoiseLite</code> sampling for coordinate displacement and rotational jitter.
                     </p>
                 </div>
 
-                <div class="group">
-                    <div class="flex items-baseline gap-3 mb-1">
-                        <span class="text-white font-bold">ImpactFrame</span>
-                        <span class="text-zinc-700 text-[10px]">/ impact_frame.gd</span>
+                <div class="component-card">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="text-white text-xs font-bold">ImpactFrame</h3>
+                        <span class="text-[9px] text-zinc-700">impact_frame.gd</span>
                     </div>
-                    <p class="text-zinc-500 leading-relaxed">
-                        Global time-scale manipulation. Overrides <code class="mono">Engine.time_scale</code> for specified durations to execute hitstop logic.
+                    <p class="text-[11px] text-zinc-500">
+                        Hitstop implementation via <code class="mono text-blue-400">Engine.time_scale</code> manipulation. Supports screen-flash overlays and duration management.
                     </p>
                 </div>
 
-                <div class="group">
-                    <div class="flex items-baseline gap-3 mb-1">
-                        <span class="text-white font-bold">SquashStretch</span>
-                        <span class="text-zinc-700 text-[10px]">/ squash_stretch.gd</span>
+                <div class="component-card">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="text-white text-xs font-bold">SquashStretch</h3>
+                        <span class="text-[9px] text-zinc-700">squash_stretch.gd</span>
                     </div>
-                    <p class="text-zinc-500 leading-relaxed">
-                        Procedural scale interpolation. Updates parent <code class="mono">scale</code> vector using <code class="mono">lerp</code> toward <code class="mono">Vector2.ONE</code>.
+                    <p class="text-[11px] text-zinc-500">
+                        Procedural scale deformation. Targets parent <code class="mono text-orange-400">scale</code> using linear interpolation toward a neutral vector state.
                     </p>
                 </div>
 
-                <div class="group">
-                    <div class="flex items-baseline gap-3 mb-1">
-                        <span class="text-white font-bold">GhostTrail</span>
-                        <span class="text-zinc-700 text-[10px]">/ ghost_trail.gd</span>
+                <div class="component-card">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="text-white text-xs font-bold">GhostTrail</h3>
+                        <span class="text-[9px] text-zinc-700">ghost_trail.gd</span>
                     </div>
-                    <p class="text-zinc-500 leading-relaxed">
-                        Dynamic sprite instantiation. Spawns <code class="mono">Sprite2D</code> clones and manages alpha-channel tweening.
+                    <p class="text-[11px] text-zinc-500">
+                        Snapshot trail generation. Spawns decoupled <code class="mono text-blue-400">Sprite2D</code> clones with automated alpha-channel decay logic.
                     </p>
                 </div>
 
-                <div class="group">
-                    <div class="flex items-baseline gap-3 mb-1">
-                        <span class="text-white font-bold">PopLabelManager</span>
-                        <span class="text-zinc-700 text-[10px]">/ pop_label.gd</span>
+                <div class="component-card">
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="text-white text-xs font-bold">PopLabelManager</h3>
+                        <span class="text-[9px] text-zinc-700">pop_label_manager.gd</span>
                     </div>
-                    <p class="text-zinc-500 leading-relaxed">
-                        Canvas-item motion control. Manages lifecycle and drift-velocity for floating combat text.
+                    <p class="text-[11px] text-zinc-500">
+                        Combat text controller. Manages spatial drift, gravity-simulation, and lifecycle GC for floating UI elements.
                     </p>
                 </div>
             </div>
         </section>
 
-        <section class="section-border">
-            <h2 class="text-[11px] font-bold text-zinc-500 uppercase tracking-[0.3em] mb-6">Specifications</h2>
-            <ul class="text-xs space-y-3">
-                <li class="flex gap-4">
-                    <span class="text-orange-500">01</span>
-                    <span class="text-zinc-400">Pure GDScript; no C# or binary dependencies.</span>
-                </li>
-                <li class="flex gap-4">
-                    <span class="text-zinc-600">02</span>
-                    <span class="text-zinc-400">Node-based composition (no inheritance required).</span>
-                </li>
-                <li class="flex gap-4">
-                    <span class="text-blue-500">03</span>
-                    <span class="text-zinc-400">Editor-integration via <code class="mono">@tool</code> scripts.</span>
-                </li>
-            </ul>
+        <section class="mb-32">
+            <div class="section-header">
+                <h2 class="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.4em]">Architecture</h2>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-y-6 text-[11px]">
+                <div class="flex gap-4">
+                    <span class="text-orange-600 font-bold">01</span>
+                    <span class="text-zinc-500">Zero C#/GDExtension dependencies; 100% GDScript.</span>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-zinc-800 font-bold">02</span>
+                    <span class="text-zinc-500">Signal-driven effects for loose coupling.</span>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-zinc-800 font-bold">03</span>
+                    <span class="text-zinc-500">Direct <code class="mono">@tool</code> integration for editor previews.</span>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-blue-600 font-bold">04</span>
+                    <span class="text-zinc-500">Composition-centric; no base class requirements.</span>
+                </div>
+            </div>
         </section>
 
-        <footer class="mt-32 pt-8 border-t border-zinc-900">
-            <div class="flex justify-between items-center text-[9px] font-bold tracking-[0.4em] text-zinc-800">
-                <span>JUICEBOX_PROJECT // 2024</span>
-                <span class="text-gradient uppercase">MIT_LICENSE</span>
+        <footer class="pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-[9px] font-bold tracking-[0.5em] text-zinc-800 uppercase">
+                JuiceBox_Project // Built_by_Yosa
+            </div>
+            <div class="text-[9px] font-bold tracking-[0.2em] uppercase">
+                <span class="text-orange-600">MIT</span>
+                <span class="text-zinc-800 mx-2">/</span>
+                <span class="text-blue-600">Open_Source</span>
             </div>
         </footer>
     </div>
